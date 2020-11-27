@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射关系，这里是映射文件的路径，不加后缀 -->
+<!-- 
+使用动态代理的话，下面的namespace与之前的区别为
+之前是写xml的位置
+现在是写接口的全类名路径
+ -->
+<mapper namespace="org.lwj.app.login.dao.UserDao">
+  
+  <!-- 根据用户名查询用户，避免重复 -->
+  <select id="queryUserByUserName" parameterType="String" resultType="int">
+  	select count(*) from springweb.user where username = #{userName}
+  </select>
+  
+ <!-- 这里是sql语句，有输入类型，输出类型，最前面的是方法id -->
+  <select id="queryUserByUserNameAndPassword" parameterType="user"
+	resultType="int">
+	select count(*) from springweb.user where username = #{userName} and password = #{passWord}
+  </select>
+  
+  <!-- 当插入成功时，返回主键号 -->
+  <insert id="insertUserToSignup" parameterType="user"
+  useGeneratedKeys="true" keyProperty="id">
+  	insert into springweb.user (username,password,signuptime) values(#{userName},#{passWord},#{signupTime})
+  </insert>
+  
+  <!-- 根据姓名查id -->
+  <select id="queryUserIdByUserName" parameterType="String"
+  resultType="int">
+  	select id from springweb.user where username = #{userName}
+  </select>
+  
+  <!-- 根据姓名查密码 -->
+  <select id="queryPasswordByUserName" parameterType="String"
+  resultType="String">
+  	select passWord from springweb.user where userName = #{userName}
+  </select>
+  
+</mapper>

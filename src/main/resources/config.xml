@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+  <!-- 这里配置数据源及其他的配置 -->
+<configuration>
+
+<!-- Mybatis配置文件主要就是配数据源和映射关系 -->
+
+
+<!--=======================================================-->
+  <!-- 从外部引用数据库配置 db.properties -->
+  <!-- <properties resource="db.properties" /> -->
+<!--=======================================================--> 
+  
+  
+  
+  
+<!--=======================================================-->  
+  <!-- 这里设置全局参数
+  <settings>
+  	<setting name="" value=""/>
+  </settings>
+   -->
+<!--=======================================================-->
+
+
+
+
+
+
+  
+<!--=======================================================-->    
+  <!-- 设置别名 -->
+  <typeAliases>
+  	<!-- 设置单个别名 
+  	<typeAlias type="lwj.mybatis.entity3.Person" alias="person"/>
+  	-->
+  	
+  	<!-- 批量设置别名 
+  		就是将包名定义进去，以后只要写不带包名的类名就行，忽略大小写
+  	-->
+  	
+  	<package name="org.lwj.app.login.entity"/>
+  	<package name="org.lwj.app.chat.entity"/>
+  	<package name="org.lwj.app.system.authority.entity"/>
+  	<package name="org.lwj.app.article.eneity"/>
+  	<package name="org.lwj.app.course.entity"/>
+  	
+  </typeAliases>
+<!--=======================================================-->    
+  
+  
+  
+<!--=======================================================-->
+	<!-- 配置类型转换器 -->
+	<!-- <typeHandlers> -->
+		<!-- 可以写多个 
+			注意后面的jdbc类型，最好查一下
+		-->
+		<!-- <typeHandler handler="lwj.mybatis.converter.BooleanAndIntConnverter" javaType="Boolean" jdbcType="INTEGER"/>
+	</typeHandlers> -->
+<!--=======================================================-->  
+  
+  
+  
+  
+  
+<!--=======================================================-->
+  <!-- 配置环境，可以切换环境及切换数据库 -->
+  <!-- <environments default="development">
+    <environment id="development"> -->
+      <!-- 事务处理的方式 -->
+      <!-- jdbc是手工方式处理  commit rollback 等操作-->
+      <!-- manager 可以交给第三方托管 如spring/jboss自动执行-->
+     <!--  <transactionManager type="JDBC"/> -->
+      <!-- 使用连接池的方式，这样比较省性能，如果是传统的jdbc方式，每次访问就会打开关闭一次连接 -->
+      <!-- unpooled 非连接池形式-->
+      <!-- jndi 获取tomcat内置连接池，数据源 -->
+      <!-- <dataSource type="POOLED"> -->
+      <!-- 配置数据库信息  -->
+       <!--  <property name="driver" value="${driver}"/> 获取键值对
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments> -->
+<!--=======================================================-->
+  
+  
+  
+  
+  
+  
+  
+<!--=======================================================-->
+  <!-- 加载映射文件 -->
+  <!-- <mappers>
+    <mapper resource="lwj/mybatis/entity/personMapper.xml"/>
+    <mapper resource="lwj/mybatis/entity2/studentMapper.xml"/> -->
+    <!-- 约定方式的mapper.xml文件与接口放在同一个包下 -->
+    <!-- <mapper resource="lwj/mybatis/mapper/personMapper.xml"/>
+  </mappers> -->
+<!--=======================================================-->  
+
+</configuration>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射关系，这里是映射文件的路径，不加后缀 -->
+<!-- 
+使用动态代理的话，下面的namespace与之前的区别为
+之前是写xml的位置
+现在是写接口的全类名路径
+ -->
+<mapper namespace="org.lwj.app.course.dao.CourseDao">
+  
+  <!-- 每次查询6个，参数是页码的数值  （页码-1）*6 -->
+  <select id="queryCoursesLimitByPageNo" parameterType="int"
+  resultType="course">
+  select * from springweb.course limit ${value},6
+  </select>
+  
+  <!-- 查询课程总数 -->
+  <select id="queryCoursesCount"
+  resultType="int">
+  select count(*) from springweb.course
+  </select>
+  
+  
+  <select id="queryCourseIdByCourseName" parameterType="String"
+  resultType="int">
+  select courseId from springweb.course where courseName = #{value}
+  </select>
+  
+</mapper>

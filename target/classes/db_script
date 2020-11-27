@@ -1,0 +1,71 @@
+
+#用户的文章表
+CREATE TABLE `springweb`.`articles` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `userid` INT NOT NULL,
+  `articleTitle` VARCHAR(45) NOT NULL,
+  `article` MEDIUMBLOB NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `articleTitle_UNIQUE` (`articleTitle` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+ALTER TABLE `springweb`.`articles` 
+ADD COLUMN `courseId` INT NOT NULL AFTER `article`;
+
+ALTER TABLE `springweb`.`articles` 
+ADD COLUMN `courseId` INT NOT NULL AFTER `article`,
+CHANGE COLUMN `id` `articleId` INT(11) NOT NULL AUTO_INCREMENT ;
+
+
+#课程的表
+CREATE TABLE `springweb`.`course` (
+  `courseId` INT NOT NULL AUTO_INCREMENT,
+  `courseName` VARCHAR(45) NOT NULL,
+  `userId` VARCHAR(45) NOT NULL,
+  `courseInfo` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`courseId`),
+  UNIQUE INDEX `courseId_UNIQUE` (`courseId` ASC) VISIBLE);
+  
+ 
+  ALTER TABLE `springweb`.`course` 
+CHANGE COLUMN `userId` `userId` INT NOT NULL ;
+
+#需要添加一列userName
+
+ALTER TABLE `springweb`.`course` 
+CHANGE COLUMN `userName` `userName` VARCHAR(45) NOT NULL ;
+  
+  
+ALTER TABLE `springweb`.`course` 
+ADD UNIQUE INDEX `courseName_UNIQUE` (`courseName` ASC) VISIBLE;
+  
+#课程与文章的关系表
+CREATE TABLE `springweb`.`course_articles` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `courseId` INT NOT NULL,
+  `articleId` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+
+#评论的表
+CREATE TABLE `springweb`.`comments` (
+  `commentsId` INT NOT NULL AUTO_INCREMENT,
+  `articleId` INT NOT NULL,
+  `fromUserId` INT NOT NULL,
+  `targetUserId` INT NOT NULL,
+  `comment` MEDIUMBLOB NOT NULL,
+  PRIMARY KEY (`commentsId`),
+  UNIQUE INDEX `id_UNIQUE` (`commentsId` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+#添加是否为文章的评论
+ALTER TABLE `springweb`.`comments` 
+ADD COLUMN `isArticleCommect` INT NOT NULL AFTER `comment`;
+

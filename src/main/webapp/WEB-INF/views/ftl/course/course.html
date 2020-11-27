@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>课程</title>
+<link rel="stylesheet" href="../../asset/course/css/course.css">
+<link rel="stylesheet" href="../../asset/plugs/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../asset/plugs/mdEditor/css/editormd.min.css">
+<style>
+body{
+	background-color: #efefef;
+}
+
+</style>
+</head>
+<body>
+	<!-- 标题 -->
+	<div class="container-fluid navbar navbar-fixed-top course_header">
+		<div class="row">
+			<div class="col-md-6">
+				<h1 class="text-center courseName">${name}<span class="glyphicon glyphicon-star" aria-hidden="true"></span></h1>	
+			</div>
+			<div class="col-md-3"></div>
+			<div class="col-md-3 myNavBar">
+				<ul class="nav navbar-nav">
+			        <li class="active"><a href="../../course/article/${name}">写文章</a></li>
+			        <li><a href="#">写回答</a></li>
+			        <li><a href="#">我的</a></li>
+			    </ul>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-- 问答模块 -->
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" style="width:90%;"  role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">关于此文章的问答，如果对这篇文章存在疑惑，可以在这里提问</h4>
+	      </div>
+	      <div class="modal-body">
+	        ...
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- 问答模块 -->
+	
+	
+	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<div class="articles">
+					
+					<!-- 一篇文章 -->
+					<!-- <div class="article container-fluid">
+						<div class="row article_header">
+							<div class="col-md-7 article_title text-center">
+								<p>如何看待美国疫情确诊人数破2.5万asdasd</p>
+							</div>
+							<div class="col-md-5 article_user text-center">
+								<p>--<span>lwj</span></p>
+							</div>
+						</div>
+						
+						<div class="article_text">
+							<p>
+								据约翰·霍普金斯大学数据，截至美国东部时间22日18时43分，美国累计确诊33073例。
+								美国副总统彭斯当天证实，至少有25.4万美国人已经接受了新冠病毒检测并
+								获知结果，但这一数据并不包括地方医院和私人实验室的检测数据。
+								当地时间22日，美国总统特朗普宣布华盛顿州为疫情“重大灾区”，并命令联邦政府向
+								该州各级政府提供援助。目前该州累计确诊1793例，累计死亡94例。此前，特朗普已经
+								宣布纽约州为“重大灾区”。
+								据约翰·霍普金斯大学数据，截至美国东部时间22日18时43分，美国累计确诊33073例。
+								美国副总统彭斯当天证实，至少有25.4万美国人已经接受了新冠病毒检测并
+								获知结果，但这一数据并不包括地方医院和私人实验室的检测数据。
+								当地时间22日，美国总统特朗普宣布华盛顿州为疫情“重大灾区”，并命令联邦政府向
+								该州各级政府提供援助。目前该州累计确诊1793例，累计死亡94例。此前，特朗普已经
+								宣布纽约州为“重大灾区”。
+								当天，美国总统特朗普宣布将调动联邦国民卫队帮助华盛顿州、加州和纽约州等受疫情严重影响的地区抗击疫情。特朗普表示相关地区已陆续进入重大灾区状态，这使得联邦政府能够更密集地向这些
+								州提供帮助。截至22日，美国已有8个州宣布“居家隔离令”，要求居民不要出门以防止疫情扩散。这8个州分别是加利福尼亚州、纽约州、伊利诺伊州、俄亥俄州、新泽西州、路易斯安那州、康涅狄格州、
+								特拉华州。这意味着，“居家隔离令”已经覆盖美国上亿人，即美国人口的近三分之一。
+								当地时间22日，纽约市长德布拉西奥表示，美国目前三分之一的确诊病例在纽约市，这一情况短期内不会得到改善，“事实是形势正在恶化，如果总统不采取行动，那些本来可以活下去的人会死去”。
+								当地时间22日，多名美国国防部军人、参议院参议员等确诊感染：
+								当地时间22日，美国国防部宣布，目前已有111名军人确诊感染新冠病毒，这一数字比两天前几乎翻了一倍。
+								当地时间22日，美国参议员兰德·保罗确诊感染新冠病毒。包括保罗在内，已有5名共和党参议员自我隔离，其他4人是迈克·李、米特·罗姆尼、科里·加德纳和里克·斯科特。
+								当地时间22日，美国驻布基纳法索大使安德鲁·杨宣布自己的新冠检测呈阳性，这是首位确诊新冠肺炎的美国驻外大使。
+								此外，当地时间22日，美国圣路易斯联邦储备银行行长詹姆斯·布拉德预计，美国第二季度的失业率可能会达到30%，美国二季度国内生产总值(GDP)将出现前所未有的50%的降幅。
+							</p>
+						</div>
+						
+						<div class="row article_giveLike">
+							<div class="col-md-1"></div>
+							<div class="col-md-2">
+								<button type="button" class="btn btn-primary agree_btn">赞同125</button>
+							</div>
+							<div class="col-md-2 text-center article_comments">
+								<a href="#" class="lookComments">21条评论</a>
+							</div>
+							<div class="col-md-2 text-center">
+								<button type="button" class="btn btn-primary agree_btn" data-toggle="modal" data-target="#myModal">问答</button>
+							</div>
+						</div>
+						
+						评论框
+						<div class="article_comments_contain">
+							评论框标题
+							<div class="comments_contain_title">
+								<p class="comments_contain_title_text">21条评论</p>
+							</div>
+							评论框主体
+							<div class="comments_contain_comments">
+								 
+								 评论列表
+								 <div class="comments_list">
+								 	<div class="userComment">
+								 		<a href="#">lwj</a>
+								 		<p>我觉得你写的很好</p>
+								 		<div class="options">
+								 			赞    回复	
+								 		</div>
+								 		<div class="editorReply">
+								 			编辑器
+											 <div id="test-editormd">
+											　　<textarea style="display:none;" placeholder="markdown语言">#Editor.md</textarea>
+											 </div>
+											 回复按钮
+											 <button type="button" class="btn btn-primary submit_btn">回复</button>
+								 		</div>
+								 	</div>
+								 	<div class="userComment">
+								 		<a href="#">lwj</a>
+								 		<p>我觉得你写的很好</p>
+								 		<div class="options">
+								 			赞    回复	
+								 		</div>
+								 	</div>
+								 </div>
+								 
+								 编辑器
+								 <div id="editormd">
+								　　<textarea style="display:none;" placeholder="markdown语言">#Editor.md</textarea>
+								 </div>
+								 
+								 <button type="button" class="btn btn-primary submit_btn">提交</button>
+							</div>
+						</div>
+					</div> -->
+					
+					
+			</div>
+			
+			<div class="col-md-1"></div>
+		</div>
+	</div>
+	</div>
+	
+	<!-- 主体部分 -->
+	
+	
+	
+</body>
+
+<script type="text/javascript" src="../../asset/plugs/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../../asset/plugs/readmore.min.js"></script>
+<script type="text/javascript" src="../../asset/plugs/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../asset/plugs/mdEditor/lib/flowchart.min.js"></script>
+<script type="text/javascript" src="../../asset/plugs/mdEditor/lib/jquery.flowchart.min.js"></script>
+<script type="text/javascript" src="../../asset/plugs/mdEditor/lib/marked.min.js"></script>
+<script type="text/javascript" src="../../asset/plugs/mdEditor/lib/prettify.min.js"></script>
+<script type="text/javascript" src="../../asset/plugs/mdEditor/lib/raphael.min.js"></script>
+
+<script type="text/javascript" src="../../asset/plugs/mdEditor/lib/underscore.min.js"></script>
+<script type="text/javascript" src="../../asset/plugs/mdEditor/editormd.js"></script>
+<script type="text/javascript" src="../../asset/plugs/mdEditor/lib/sequence-diagram.min.js"></script>
+<script type="text/javascript" src="../../asset/course/js/course.js"></script>
+</html>

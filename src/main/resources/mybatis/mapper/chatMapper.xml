@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射关系，这里是映射文件的路径，不加后缀 -->
+<!-- 
+使用动态代理的话，下面的namespace与之前的区别为
+之前是写xml的位置
+现在是写接口的全类名路径
+ -->
+<mapper namespace="org.lwj.app.chat.dao.ChatDao">
+  <!-- 查询好友，根据自己的id查询 -->
+  <select id="queryFriendsByUserId" parameterType="int"
+  resultType="String">
+  	select userName from springweb.user where id in 
+  	(
+  		select friendId from springweb.friends where userId = #{id}
+  	);
+  </select>
+  
+  <!-- 查询聊天记录 -->
+  <select id="queryUserMsgByUserNameAndFriend" parameterType="Map"
+  resultType="chatMsg">
+  	select * from springweb.chatmsg where
+  	   userId in(#{friendId},#{userId})  
+  	   and 
+  	   friendId in(#{friendId},#{userId}) 
+  	   and 
+  	   userMsgDate > #{limitDate}
+  </select>
+  
+  <!-- 存储聊天记录  返回值时主键，用实体getId()获得-->
+  <update id="saveMsg" parameterType="chatMsg" 
+  useGeneratedKeys="true" keyProperty="id">
+  	insert into springweb.chatmsg (userId,friendId,userMsg,unReadMsg,userMsgDate,unReadMsgDate)
+  	values(#{userId},#{friendId},#{userMsg},#{unReadMsg},#{userMsgDate},#{unReadMsgDate})
+  </update>
+  
+  <!-- 根据姓名查Id -->
+  <select id="queryUserIdByUserName" parameterType="String"
+  resultType="int">
+  	select id from springweb.user where userName = #{userName}
+  </select>
+  
+  <!-- 如果用户没有登录，则将好友的消息标记为未读 unReadMsg标记为1的时候代表此消息未读-->
+  <update id="setFriendMsgToUnRead" parameterType="map">
+  	update springweb.chatmsg SET unReadMsg='1' WHERE userId = #{userId} and friendId = #{friendId} ORDER BY userMsgDate DESC LIMIT 1;
+  </update>
+  
+  <!-- 如果用户将未读消息获取过，那么就将消息变为以读状态-->
+  <update id="setFriendMsgToReaded" parameterType="map">
+  	update springweb.chatmsg SET unReadMsg='' WHERE userId = #{friendId} and friendId = #{userId} 
+  </update>
+  
+  <!-- 查询未读消息 -->
+  <select id="queryUnReadMsg" parameterType="int"
+  resultType="java.lang.Integer">
+	select distinct userId from springweb.chatmsg where friendId = #{userId} and unReadMsg='1' 
+  </select>
+  
+  <!-- 根据userId查询姓名 -->
+  <select id="queryUserNameByUserId" parameterType="int"
+  resultType="String">
+  	select username from springweb.user where id=#{userId}
+  </select>
+  
+  
+</mapper>

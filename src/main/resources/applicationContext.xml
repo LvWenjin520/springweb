@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+
+
+<!--=============================================================================================================-->	
+	<!-- 配置扫描包，扫描包中类的注解 用到注解时需要这个-->
+	<context:component-scan base-package=
+	"org.lwj.app.*">
+	</context:component-scan>
+<!--=============================================================================================================-->
+
+
+
+
+<!--=============================================================================================================-->
+	<!-- spring整合mybits
+		1.将数据源交给spring管理
+		2.将sqlsessionfactory交给spring管理
+	 -->
+	<!-- 使用外部配置文件db.properties -->
+	<bean id="outerDbConfig" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+		<property name="locations">
+			<!-- 可以有多个配置文件，所以里面是array -->
+			<array>
+				<value>classpath:db.properties</value>
+			</array>
+		</property>
+	</bean>
+	<!-- 配置数据源 使用dbcp数据源
+		上面配了外部数据库信息，所以里面用el表达式直接拿数据
+	-->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driver}"></property>
+		<property name="url" value="${url}"></property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${password}"></property>
+	</bean>
+
+	<!-- 配置SqlSessionFactory 类在整合包里-->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 给数据源注入依赖，关联上面配好的数据源 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 加载mybatis的原本的配置文件，将之交给spring -->
+		<property name="configLocation" value="classpath:config.xml"></property>
+		<!-- 配置映射文件的路径,加载mapper.xml的路径
+			所有的mapper.xml文件全部放在下方法的文件夹中 
+		-->
+		<property name="mapperLocations" value="classpath:mybatis/mapper/**.xml"></property>
+	</bean>
+	
+	<!-- 这里配置mapper对象，就是获取接口来达到动态代理的效果 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		
+		<!-- 将sqlSessionFactory配好，里面包含所有的数据库信息 -->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<!-- 配置属性,扫描mapper就是接口所在的包 -->
+		<property name="basePackage" value="org.lwj.app.**.dao"></property>		
+	</bean>
+
+<!--=============================================================================================================-->
+
+
+
+
+
+
+<!--=============================================================================================================-->
+	<!-- 配置事务的类，此类中需要数据源，就是数据库信息 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- 增加事务支持 数据库要用到的--><!-- 这是核心 -->
+	<tx:annotation-driven transaction-manager="txManager"/>
+<!--=============================================================================================================-->
+
+	
+	
+	
+<!--=============================================================================================================-->	
+	<!-- aspect使用注解的话需要开启注解支持 -->
+	<!-- aop自动代理 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+<!--=============================================================================================================-->
+</beans>

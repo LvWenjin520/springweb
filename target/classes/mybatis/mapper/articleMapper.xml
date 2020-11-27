@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射关系，这里是映射文件的路径，不加后缀 -->
+<!-- 
+使用动态代理的话，下面的namespace与之前的区别为
+之前是写xml的位置
+现在是写接口的全类名路径
+ -->
+<mapper namespace="org.lwj.app.article.dao.ArticleDao">
+  <insert id="insertUserArticle"
+  parameterType="article">
+  	insert into springweb.articles (userId,articleTitle,article,userName,courseId) values(#{userId},#{articleTitle},#{article},#{userName},#{courseId})
+  </insert>
+  
+  <select id="queryArticleTitleCount" parameterType="article"
+  resultType="int">
+  select count(*) from springweb.articles where articleTitle = #{articleTitle}
+  </select>
+  
+  <!-- 查询所有的文章 -->
+  <select id="queryArticlesByCourseId" parameterType="int"
+  resultType="article">
+  	select * from springweb.articles where courseId=${value} ORDER BY agreeMents desc
+  </select>
+  
+  <!-- 查询所有的评论 -->
+  <select id="queryCommentsByArticleId" parameterType="int"
+  resultType="comment">
+  select * from springweb.comments where articleId=${value}
+  </select>
+  
+  <!-- 根据文章标题查询文章id -->
+  <select id="queryArticleIdByArticleTitle" parameterType="String"
+  resultType="int">
+  select articleId from springweb.articles where articleTitle = #{articleTitle}
+  </select>
+  
+</mapper>

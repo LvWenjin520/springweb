@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>写文章</title>
+<link rel="stylesheet" href="../../asset/writearticle/css/writeArticle.css">
+<link rel="stylesheet" href="../../asset/plugs/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../asset/plugs/mdEditor/css/editormd.min.css">
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">写文章</a>
+	    </div>
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="#" class="publish_btn">发布</a></li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle preview" role="button" aria-haspopup="true" aria-expanded="false" data-toggle="modal" data-target="#myModal">预览</a>
+	        </li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+	
+	
+	<!-- 预览模块 -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" style="width:90%;"  role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">预览</h4>
+	      </div>
+	      <div class="modal-body">
+	      		<div class="preview_article_title"></div>
+				<!-- 预览markdown -->	        
+					<div id="showMd">
+						 <textarea style="display: none;">
+
+						 </textarea>
+					</div>
+				<!-- 预览markdown -->
+
+
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- 预览模块 -->
+	
+	<div class="container-fluid article_title_input">
+	  <div class="row">
+	    <div class="col-md-1"></div>
+	    <div class="col-md-10 text-center">
+			 <input type="text" class="form-control input-lg articleTitle" placeholder="请输入文章标题">
+		</div>
+	    <div class="col-md-1"></div>
+	  </div>
+  	  <div class="row article_text_input">
+        <!-- 编辑器 -->
+	    <div id="editormd">
+	　　     <textarea style="display:none;" placeholder="markdown编辑器">#markdown编辑器</textarea>
+	    </div>
+	  </div>
+	</div>
+	
+	
+	
+	
+</body>
+<script type="text/javascript" src="../../asset/plugs/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../../asset/plugs/bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="../../asset/plugs/mdEditor/lib/flowchart.min.js"></script>
+<script type="text/javascript" src="../../asset/plugs/mdEditor/lib/jquery.flowchart.min.js"></script>
+<script type="text/javascript" src="../../asset/plugs/mdEditor/lib/marked.min.js"></script>
+<script type="text/javascript" src="../../asset/plugs/mdEditor/lib/prettify.min.js"></script>
+<script type="text/javascript" src="../../asset/plugs/mdEditor/lib/raphael.min.js"></script>
+
+<script type="text/javascript" src="../../asset/plugs/mdEditor/lib/underscore.min.js"></script>
+<script type="text/javascript" src="../../asset/plugs/mdEditor/editormd.js"></script>
+<script type="text/javascript" src="../../asset/plugs/mdEditor/lib/sequence-diagram.min.js"></script>
+<script type="text/javascript" src="../../asset/writearticle/js/writeArticle.js"></script>
+</html>

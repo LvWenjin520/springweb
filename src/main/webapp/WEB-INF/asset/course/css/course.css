@@ -1,0 +1,177 @@
+@charset "UTF-8";
+
+body,html{
+	height: 100%;
+	width: 100%;
+}
+body{
+	background-color: #efefef;
+}
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
+.course_header{
+	height: 60px;
+	background-color: white;
+}
+
+.course_header h1{
+	margin:0;
+	line-height: 60px;
+}
+
+.myNavBar{
+	height: 60px;
+}
+
+.myNavBar ul,li,a{
+	height: 60px;
+	font-size: 18px;
+}
+
+
+.articles{
+	width: 98%;
+	background-color: #FFFFFF;
+	border-radius: 8px;
+	position: relative;
+	left: 1%;
+	top: 70px;
+}
+
+.articles .article{
+	/* height: 200px; */
+	width: 100%;
+	border-bottom: 1px solid #DCDCDC;
+	margin: 0;
+	padding: 0;
+}
+
+
+.articles .article .article_header{
+	margin-top: 10px;
+}
+
+.articles .article .article_header .article_title p{
+	font-size: 40px;
+	margin-bottom: 10px;
+}
+
+.articles .article .article_header .article_user p{
+	font-size: 18px;
+}
+
+
+.article .article_text p{
+	font-size:18px;
+	text-indent:2em;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 8px;
+}
+
+.moreLink{
+	margin-top:8px;
+	color:#5C5C5C;
+	margin-left: 86%;
+	font-size: 15px;
+}
+
+.lessLink{
+	margin-top:8px;
+	color:#5C5C5C;
+	margin-left: 86%;
+	font-size: 15px;
+}
+
+.article .article_giveLike{
+	margin-bottom: 8px;
+}
+
+.article .article_giveLike .agree_btn{
+	border: none;
+	border-radius: 3px;
+	background-color: #72C5FC;
+	width: 100%;
+}
+
+.article .article_giveLike a{
+	margin-top:5px;
+	text-decoration: none;
+	color:#5C5C5C;
+}
+
+.article .article_giveLike .article_comments{
+	margin-top: 5px;
+	font-size: 15px;
+}
+
+
+
+
+/* ==========================评论框========================== */
+.article_comments_contain{
+	margin-left: 10px;
+	margin-right: 10px;
+	border-radius: 8px;
+	margin-bottom: 10px;
+	border:none;
+}
+
+.article_comments_contain .comments_contain_title{
+	background-color: #E7E7E7;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+}
+
+.article_comments_contain .comments_contain_title p{
+	font-size: 18px;
+	font-weight: 500;
+	margin-left: 5%;
+	line-height: 50px;
+	margin-bottom: 0;
+}
+
+.article_comments_contain .comments_contain_comments .submit_btn{
+	margin-left: 90%;
+	border: none;
+	background-color: #72C5FC;
+	margin-bottom: 10px;
+}
+
+.userComment{
+	margin-top:10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	border-bottom: 1px solid #E7E7E7;
+	margin-bottom: 10px;
+}
+
+.userComment a{
+	text-decoration: none;
+	font-size: 20px;
+}
+
+.userComment p{
+	margin-left: 20px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+
+.options{
+	margin-bottom: 10px;
+}
+
+.lookComments{
+	cursor: pointer;
+}
+
+/* 评论中的回复两个字 */
+.strHuiFu{
+	margin-left: 20px;
+	margin-right: 20px;
+}

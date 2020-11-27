@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射关系，这里是映射文件的路径，不加后缀 -->
+<!-- 
+使用动态代理的话，下面的namespace与之前的区别为
+之前是写xml的位置
+现在是写接口的全类名路径
+ -->
+<mapper namespace="org.lwj.app.system.authority.dao.AuthorityDao">
+  <select id="queryAuthorityByUserId" parameterType="int"
+  resultMap="userRole">
+  select r1.*,r2.*
+	from 
+		springweb.user_role r3 
+	left join 
+		springweb.user r1
+	on 
+		r1.id = r3.user_id 
+	left join 
+		springweb.sys_role r2 
+	on 
+		r2.role_id = r3.role_id
+	where 
+		r1.id=${value}
+	and
+	    r2.role_status = 1
+  </select>
+  
+  <resultMap type="user" id="userRole">
+  	<id column="id" jdbcType="INTEGER" property="id"/>
+  	<result column="username" jdbcType="VARCHAR" property="userName"/>
+  	<collection property="authority" ofType="org.lwj.app.system.authority.entity.Authority">
+  		<id column="rid" jdbcType="INTEGER" property="id" />
+        <result column="role_name" jdbcType="VARCHAR" property="role_name" />
+        <result column="role_id" jdbcType="INTEGER" property="role_id" />
+        <result column="role_status" jdbcType="INTEGER" property="role_status" />
+  	</collection>
+  </resultMap>
+  
+  
+  <!-- 为新用户添加普通用户权限 -->
+  <insert id="addAuthorityByUserId" parameterType="int">
+  	insert into springweb.user_role (role_id,user_id) values (1,${value})
+  </insert>
+  
+</mapper>

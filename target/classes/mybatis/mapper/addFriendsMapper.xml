@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.lwj.app.chat.dao.AddFriendsDao">
+	
+	<insert id="insertAddFriendInfo" parameterType="friendsRelationship">
+		insert into springweb.friendsrelationship (requestUserId,targetUserId,addMsg) 
+			values(#{requestUserId},#{targetUserId},#{addMsg})
+	</insert>	
+	<select id="queryTargetUserCount" parameterType="string"
+	resultType="int">
+		select count(*) from springweb.user where userName = #{targetUserName}
+	</select>
+	
+	<select id="queryHasFriend" parameterType="friends"
+	resultType="int">
+		select count(*) from springweb.friends where userId = #{userId} and friendId = #{friendId}
+	</select>
+
+
+    <!-- 查询好友请求 -->
+    <select id="queryFriendsAddInfo" parameterType="int"
+    resultType="Map">
+    select distinct requestUserId,addMsg from springweb.friendsrelationship
+    where targetUserId = ${value} and agreement is null
+    </select>
+    
+    <!-- 同意添加为好友 -->
+    <update id="agreeWithFriendsAdd" parameterType="Map">
+    	update springweb.friendsrelationship set agreement = 1 
+    		where 
+    	requestUserId in (#{requestUserId},#{userId}) 
+    		or
+    	targetUserId in (#{requestUserId},#{userId}) 
+    </update>
+    
+    <!-- 向好友列表中添加关系 -->
+    <insert id="postRelationshipByMe" parameterType="Map">
+    	insert into springweb.friends (userId,friendId) values (#{userId},#{requestUserId});
+    </insert>
+    <!-- 向好友列表中添加关系，从好友的角度 -->
+    <insert id="postRelationshipByFriend" parameterType="Map">
+    	insert into springweb.friends (userId,friendId) values (#{requestUserId},#{userId});
+    </insert>
+    
+    
+    <!-- 删除好友请求的信息 -->
+    <delete id="deleteFriendsAddInfo" parameterType="Map">
+    	delete from springweb.friendsrelationship where requestUserId = #{requestUserId} and targetUserId = #{targetUserId}
+    </delete>
+
+</mapper>

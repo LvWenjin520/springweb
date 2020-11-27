@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+
+
+		<!--1. 配置 SecurityManager!-->
+	    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+	        <!--缓存管理器-->
+	        <property name="cacheManager" ref="cacheManager"/>
+	        <!--realms-->
+	        <property name="realms">
+	            <list>
+	                <ref bean="jdbcRealm"/>
+	            </list>
+	        </property>
+	    </bean>
+
+		<!--2. 配置 CacheManager缓存管理器.-->
+	    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+	        <!--缓存配置文件（这里暂不涉及，可以随便拷贝一个）-->
+	       <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
+	    </bean>
+
+		<!--3. 配置 Realm-->
+	    <bean id="jdbcRealm" class="org.lwj.app.system.shiro.realm.MyRealm">
+	    	<property name="credentialsMatcher">
+	            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+	                <!-- 加密算法为MD5 -->
+	               <property name="hashAlgorithmName" value="MD5"></property>
+	                <!-- 加密次数 -->
+	               <property name="hashIterations" value="1"></property>
+	            </bean>
+	        </property>
+	    </bean>
+	    
+	   <!-- 原本的注解支持放到springmvc中才能再controller中生效 -->
+		
+		<!--  <bean id="formAuthenticationFilter" class="org.lwj.app.system.shiro.login.LoginSuccess">
+	        <property name="usernameParam" value="username" />
+	        <property name="passwordParam" value="password" />
+	    </bean> -->
+		
+		<!--6. 配置 ShiroFilter.-->
+	    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+	        <property name="securityManager" ref="securityManager"/>
+	        <!-- 没有登录的用户请求需要登录的页面时，跳转到的页面 -->
+	        <property name="loginUrl" value="/login/askForLoginPage"/>
+	        
+	        <!-- 登录成功时跳转到的页面，可以不用配置 -->
+	        <!-- <property name="successUrl" value="/list.jsp"/> -->
+	        
+	       	<!--  没有权限默认跳转的页面，登录的用户访问了没有被授权的资源自动跳转到的页面 -->
+	        <property name="unauthorizedUrl" value="/login/askForLoginPage"/>
+	        
+	        <property name="filters">
+				<util:map>
+					<entry key="ajaxFilter" value-ref="ajaxFilter"/>
+				</util:map>
+			</property>
+	        
+	        
+	        <property name="filterChainDefinitions">
+	            <value>
+	            	/ = anon   <!-- anon代表没有权限时也能访问，任何人都能访问 -->
+	            	/index.html = anon
+	                /**/asset/** = anon
+	                /index/** = anon
+	                /**/loginPage.html=anon
+	                /login/** = anon
+	                /signup/** = anon
+	                <!-- /shiro/login = anon
+	                /shiro/logout = logout -->
+	                <!-- /course/** = anon
+	                /views/course.html = anon -->
+	                /** = authc
+	            </value>
+	        </property>
+	    </bean>
+
+<bean id="ajaxFilter" class="org.lwj.app.system.shiro.myfilters.MyAjaxFilter"></bean>
+
+
+</beans> 
